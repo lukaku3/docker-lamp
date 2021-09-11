@@ -26,7 +26,7 @@ RUN cd /etc/apache2/mods-enabled \
     && php composer-setup.php \
     && php -r "unlink('composer-setup.php');" \
     && mv composer.phar /usr/local/bin/composer \
-    && echo 'alias ll="ls -la"' > /root/.bashrc \
+    && echo 'alias ll="ls -la"' >> /root/.bashrc \
     && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime 
 
 COPY ./etc/php.ini /usr/local/etc/php/php.ini
