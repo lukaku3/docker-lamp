@@ -3,13 +3,13 @@ services:
   app:
     ports:
       - "8000:80"
-    build: ./docker/app
-    container_name: web_app
+    build: ./web
+    container_name: web
     volumes:
-      - ./src/CodeIgniter:/var/www/html
+      - ./src/project:/var/www/html
   db:
     image: mysql/mysql-server
-    container_name: app_db
+    container_name: db
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: app_db
@@ -18,7 +18,7 @@ services:
       TZ: 'Asia/Tokyo'
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
-      - ./docker/db/data:/var/lib/mysql
-      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./db/data:/var/lib/mysql
+      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
     ports:
       - 3306:3306

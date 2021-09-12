@@ -23,4 +23,5 @@ pnpm-debug.log*
 *.sw?
 
 # local
-docker/db/data/*
+db/data/*
+!db/data/.empty
