@@ -3,7 +3,7 @@ services:
   app:
     ports:
       - "8000:80"
-    build: ./web
+    build: ./app
     container_name: web
     volumes:
       - ./src/project:/var/www/html
