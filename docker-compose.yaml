@@ -8,7 +8,14 @@ services:
     container_name: web_app
     volumes:
       - ./src/projects:/var/www/html
-#    environment:
+    environment:
+      XDEBUG_MODE: debug
+      XDEBUG_ENABLED: 1
+      XDEBUG_REMOTE_AUTOSTART: 1
+      XDEBUG_MAXNESTING_LEVEL: 1000
+      XDEBUG_REMOTE_CONNECT_BACK: 1
+      XDEBUG_REMOTE_HOST: host.docker.internal
+      PHP_IDE_CONFIG: serverName=localhost
 #      - VIRTUAL_Host=localhost
 #      - VIRTUAL_Host=localhost,renewal
     depends_on:
