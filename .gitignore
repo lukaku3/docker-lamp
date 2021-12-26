@@ -1,2 +1,10 @@
 db/data/*
 !db/data/.empty
+./src/vendor/*
+.idea/*
+.vscode/*
+!./src/storage/framework/.empty
+src/storage/framework/*
+src/vendor/*
+docker/db/data/*
+!docker/db/data/.empty
