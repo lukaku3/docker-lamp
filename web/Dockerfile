@@ -1,21 +1,27 @@
-FROM php:7.4-apache
+# FROM mcr.microsoft.com/windows/servercore/iis
 
-# 設定ファイルをdockerコンテナ内のPHP、Apacheに読み込ませる
-ADD etc/php.ini /usr/local/etc/php/
-ADD conf.d/000-default.conf /etc/apache2/sites-enabled/
+# RUN powershell -NoProfile -Command Remove-Item -Recurse C:\inetpub\wwwroot\*
 
-# Composerのインストール
-# ミドルウェアインストール
-# Laravelで必要になるmodRewriteを有効化する
-RUN cd /usr/bin && curl -s http://getcomposer.org/installer | php && ln -s /usr/bin/composer.phar /usr/bin/composer \
-    && apt-get update && apt-get install -y \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
-    && pecl install xdebug \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-enable xdebug \
-    && mv /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled \
-    && /bin/sh -c a2enmod rewrite
+# WORKDIR /inetpub/wwwroot
 
+# COPY content/ .
+
+#sudo docker run --cap-add SYS_PTRACE
+# -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=Password1'
+# -p 1433:1433
+# --name azuresqledge -d 
+
+FROM php:8.1-apache
+
+RUN apt-get update -y \
+    && apt-get install -y curl lsb-release gnupg \
+    && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    && curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+    && apt-get update -y 
+# && echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> ~/.bashrc \
+# && source ~/.bashrc 
+# && echo "apt-get install -y msodbcsql18  mssql-tools18  unixodbc-dev libgssapi-krb5-2"
+
+
+EXPOSE 80
+# CMD ['apache2 -D FOREGROUND']
