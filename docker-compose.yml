@@ -1,0 +1,43 @@
+#sudo docker run --cap-add SYS_PTRACE
+# -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=Password1'
+# -p 1433:1433
+# --name azuresqledge -d
+version: "3.7"
+services:
+  app:
+    tty: true
+    container_name: appsvr
+    build: ./
+    environment:
+      - "ACCEPT_EULA=Y"
+    ports:
+      - "8000:80"
+    links:
+      - mssql
+    networks:
+      - "attendance_net"
+
+  mssql:
+    tty: true
+    # image: mcr.microsoft.com/mssql/server:latest
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    cap_add: [ "SYS_PTRACE" ]
+    environment:
+      - "ACCEPT_EULA=Y"
+      - "MSSQL_SA_PASSWORD=YourStrongPassword1"
+    ports:
+      - "1433:1433"
+    hostname: mssql
+    volumes:
+      - "mssql-azuresql-edge-data:/var/opt/mssql"
+    networks:
+      - "attendance_net"
+
+volumes:
+  mssql-azuresql-edge-data:
+    # sqlpad-volume:
+
+
+networks:
+  attendance_net:
+    driver: bridge
