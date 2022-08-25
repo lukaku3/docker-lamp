@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM php:8.1-apache
 
 # 設定ファイルをdockerコンテナ内のPHP、Apacheに読み込ませる
 ADD etc/php.ini /usr/local/etc/php/
@@ -11,7 +11,7 @@ RUN cd /usr/bin && curl -s http://getcomposer.org/installer | php && ln -s /usr/
     && apt-get update && apt-get install -y \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
-        libpng-dev \
+        libpng-dev mariadb-client-10.5 \
     && pecl install xdebug \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd \
