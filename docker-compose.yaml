@@ -13,7 +13,7 @@ services:
       - mysql
 
   mysql:
-    image: "mysql/mysql-server:8.0"
+    image: "mariadb:10.3"
     container_name: mysql
     ports:
       - "${FORWARD_DB_PORT:-3306}:3306"
